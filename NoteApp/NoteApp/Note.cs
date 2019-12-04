@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 
 namespace NoteApp
@@ -11,10 +9,29 @@ namespace NoteApp
 	/// </summary>
 	public class Note : ICloneable
 	{
+		/// <summary>
+		/// Поле класса "Note", содержащее название заметки.
+		/// </summary>
 		private string _title = "Без названия";
+
+		/// <summary>
+		/// Поле класса "Note", содержащее категорию заметки.
+		/// </summary>
 		private NoteType _type = NoteType.Stuff;
+
+		/// <summary>
+		/// Поле класса "Note", содержащее текст заметки.
+		/// </summary>
 		private string _text = "";
+
+		/// <summary>
+		/// Поле класса "Note", содержащее время создания заметки.
+		/// </summary>
 		private DateTime _creationTime = DateTime.Now;
+
+		/// <summary>
+		/// Поле класса "Note", содержащее время изменения заметки.
+		/// </summary>
 		private DateTime _modifiedTime = DateTime.Now;
 
 

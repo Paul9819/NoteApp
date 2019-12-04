@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 
 namespace NoteApp
@@ -10,6 +8,9 @@ namespace NoteApp
 	/// </summary>
 	public class Project
 	{
+		/// <summary>
+		/// Поле класса "Project", содержащее список заметок.
+		/// </summary>
 		private List<Note> _notes = new List<Note>();
 
 		/// <summary>

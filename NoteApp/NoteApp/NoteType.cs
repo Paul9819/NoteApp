@@ -11,7 +11,7 @@ namespace NoteApp
 		/// <summary>
 		/// Категория "Документы".
 		/// </summary>
-		Documents,
+		Documents = 1,
 
 		/// <summary>
 		/// Категория "Финансы".
@@ -34,9 +34,9 @@ namespace NoteApp
 		People,
 
 		/// <summary>
-		/// Категория "Работа
+		/// Категория "Работа".
 		/// </summary>
-		Work,
+		Job,
 
 		/// <summary>
 		/// Категория "Разное".

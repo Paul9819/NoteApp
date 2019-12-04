@@ -8,13 +8,24 @@ using Newtonsoft.Json;
 namespace NoteApp
 {
 	/// <summary>
-	/// Класс менеджера проекта, хранящий метод сохранения объекта "Проект"
-	/// в файл и загрузки проекта из файла.
+	/// Класс, хранящий метод сохранения объекта "Проект"
+	/// в файл и загрузки объекта из файла.
 	/// </summary>
 	public static class ProjectManager
 	{
+		/// <summary>
+		/// Поле класса "ProjectManager", содержащее название файла.
+		/// </summary>
 		private const string _name = @"\NotesApp.notes";
+
+		/// <summary>
+		/// Поле класса "ProjectManager", содержащее путь файла.
+		/// </summary>
 		private static string _path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+		/// <summary>
+		/// Поле класса "ProjectManager", содержащее название файла и путь к нему.
+		/// </summary>
 		private static string _file = _path + _name;
 
 		/// <summary>
@@ -39,8 +50,8 @@ namespace NoteApp
 		/// <summary>
 		/// Реализует загрузку объекта "Проект" из файла.
 		/// </summary>
-		/// <param name="project">Указание нужного проекта, который нужно загрузить.</param>
-		public static void LoadFromFile(Project project)
+		/// <param name="project">Указание проекта, который нужно загрузить.</param>
+		public static Project LoadFromFile()
 		{
 			//Создаём экземпляр сериализатора.
 			JsonSerializer serializer = new JsonSerializer();
@@ -51,7 +62,8 @@ namespace NoteApp
 			using (JsonReader reader = new JsonTextReader(sr))
 			{
 				//Вызываем десериализацию и явно преобразуем результат в целевой тип данных
-				project = (Project)serializer.Deserialize<Project>(reader);
+				var project = (Project)serializer.Deserialize<Project>(reader);
+				return project;
 			}
 		}
 	}
