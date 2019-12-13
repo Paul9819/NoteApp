@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NoteForm));
 			this.TitleLabel = new System.Windows.Forms.Label();
 			this.TitleTextBox = new System.Windows.Forms.TextBox();
 			this.CategoryLabel = new System.Windows.Forms.Label();
@@ -165,6 +166,7 @@
 			this.Controls.Add(this.CategoryLabel);
 			this.Controls.Add(this.TitleTextBox);
 			this.Controls.Add(this.TitleLabel);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "NoteForm";
 			this.Text = "Add/Edit Note";
 			this.ResumeLayout(false);
@@ -181,7 +183,7 @@
 		private System.Windows.Forms.DateTimePicker CreatedTimePicker;
 		private System.Windows.Forms.Label ModifiedLabel;
 		private System.Windows.Forms.DateTimePicker ModifiedTimePicker;
-		private System.Windows.Forms.Button CancelButton;
+		private new System.Windows.Forms.Button CancelButton;
 		private System.Windows.Forms.Button OkButton;
 		private System.Windows.Forms.ComboBox CategoryComboBox;
 		private System.Windows.Forms.RichTextBox NoteTextBox;

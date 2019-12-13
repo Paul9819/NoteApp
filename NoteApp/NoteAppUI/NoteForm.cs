@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using NoteApp;
 
@@ -14,8 +8,14 @@ namespace NoteAppUI
 {
 	public partial class NoteForm : Form
 	{
+		/// <summary>
+		/// Экземпляр класса Note.
+		/// </summary>
 		private Note _note;
 
+		/// <summary>
+		/// Возвращает и задаёт экземпляр заметки.
+		/// </summary>
 		public Note Note
 		{
 			get
@@ -27,9 +27,11 @@ namespace NoteAppUI
 				_note = value;
 				if (_note != null)
 				{
-					TitleTextBox.Text = "Без названия";
-					CategoryComboBox.SelectedItem = NoteType.Stuff;
-					NoteTextBox.Text = "";
+					TitleTextBox.Text = _note.Title;
+					CategoryComboBox.SelectedItem = _note.Type;
+					NoteTextBox.Text = _note.Text;
+					CreatedTimePicker.Value = _note.CreationTime;
+					ModifiedTimePicker.Value = _note.ModifiedTime;
 				}
 			}
 		}
@@ -53,7 +55,7 @@ namespace NoteAppUI
 			else
 			{
 				this.TitleTextBox.ForeColor = Color.Black;
-			}
+						}
 		}
 
 		private void CancelButton_Click(object sender, EventArgs e)

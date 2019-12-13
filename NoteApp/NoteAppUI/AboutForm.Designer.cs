@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutForm));
 			this.NoteAppLabel = new System.Windows.Forms.Label();
 			this.VersionLabel = new System.Windows.Forms.Label();
 			this.AuthorLabel = new System.Windows.Forms.Label();
@@ -137,6 +138,7 @@
 			this.Controls.Add(this.AuthorLabel);
 			this.Controls.Add(this.VersionLabel);
 			this.Controls.Add(this.NoteAppLabel);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "AboutForm";
 			this.Text = "About";
 			this.ResumeLayout(false);

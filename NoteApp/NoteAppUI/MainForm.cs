@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using NoteApp;
 
@@ -14,8 +7,14 @@ namespace NoteAppUI
 {
 	public partial class MainForm : Form
 	{
+		/// <summary>
+		/// Экземпляр класса Project, содержащий список заметок.
+		/// </summary>
 		private Project _project = new Project();
 
+		/// <summary>
+		/// Экземпляр формы AboutForm.
+		/// </summary>
 		AboutForm aboutForm = new AboutForm();
 
 		public MainForm()
@@ -71,6 +70,8 @@ namespace NoteAppUI
 				TitleLabel.Text = selectedNote.Title;
 				CategoryLabel.Text = selectedNote.Type.ToString("g");
 				TextRichTextBox.Text = selectedNote.Text;
+				CreateDateTimePicker.Value = selectedNote.CreationTime;
+				ModifiedDateTimePicker.Value = selectedNote.ModifiedTime;
 			}
 			else
 			{
@@ -95,6 +96,9 @@ namespace NoteAppUI
 			RemoveNote();
 		}
 
+		/// <summary>
+		/// Создание новой заметки.
+		/// </summary>
 		private void AddNote()
 		{
 			Note note = new Note();
@@ -111,6 +115,9 @@ namespace NoteAppUI
 			}
 		}
 
+		/// <summary>
+		/// Редактирование заметки.
+		/// </summary>
 		private void EditNote()
 		{
 			var selectedIndex = NotesListBox.SelectedIndex;
@@ -142,6 +149,9 @@ namespace NoteAppUI
 			}
 		}
 
+		/// <summary>
+		/// Удаление заметки.
+		/// </summary>
 		private void RemoveNote()
 		{
 			var selectedIndex = NotesListBox.SelectedIndex;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 
 
 namespace NoteApp
@@ -33,24 +34,6 @@ namespace NoteApp
 		/// Поле класса "Note", содержащее время изменения заметки.
 		/// </summary>
 		private DateTime _modifiedTime = DateTime.Now;
-
-
-		/// <summary>
-		/// Возвращает и задаёт время изменения заметки.
-		/// </summary>
-		public DateTime ModifiedTime
-		{
-			get
-			{
-				return _modifiedTime;
-			}
-
-			private set
-			{
-				value = DateTime.Now;
-				_modifiedTime = value;
-			}
-		}
 
 		/// <summary>
 		/// Возвращает и задаёт название заметки (не более 50 символов).
@@ -112,6 +95,7 @@ namespace NoteApp
 		/// <summary>
 		/// Возвращает дату создания заметки (доступно только для чтения).
 		/// </summary>
+		[JsonProperty]
 		public DateTime CreationTime
 		{
 			get
@@ -125,12 +109,30 @@ namespace NoteApp
 		}
 
 		/// <summary>
+		/// Возвращает и задаёт время изменения заметки.
+		/// </summary>
+		[JsonProperty]
+		public DateTime ModifiedTime
+		{
+			get
+			{
+				return _modifiedTime;
+			}
+
+			private set
+			{
+				//value = DateTime.Now;
+				_modifiedTime = value;
+			}
+		}
+
+		/// <summary>
 		/// Реализует возможность создавать заметки с одинаковыми именами.
 		/// </summary>
 		/// <returns>Возвращает новую заметку с существующим названием.</returns>
 		public object Clone()
 		{
-			return new Note
+			return new Note()
 			{
 				Title = this.Title,
 				Type = this.Type,
