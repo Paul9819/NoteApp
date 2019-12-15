@@ -21,6 +21,8 @@ namespace NoteAppUI
 		{
 			InitializeComponent();
 
+			ShowCategoryComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+
 			exitToolStripMenuItem.ShortcutKeys = Keys.Alt | Keys.F4;
 			aboutToolStripMenuItem.ShortcutKeys = Keys.F1;
 			addNoteToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.N;

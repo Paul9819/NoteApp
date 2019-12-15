@@ -38,6 +38,8 @@ namespace NoteAppUI
 		public NoteForm()
 		{
 			InitializeComponent();
+			CategoryComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+
 			var values = Enum.GetValues(typeof(NoteType));
 			foreach(var value in values)
 			{
@@ -51,6 +53,7 @@ namespace NoteAppUI
 			{
 				this.TitleTextBox.ForeColor = Color.Red;
 				MessageBox.Show("Название не должно превышать 50 символов.");
+				TitleTextBox.Text = "Без названия";
 			}
 			else
 			{

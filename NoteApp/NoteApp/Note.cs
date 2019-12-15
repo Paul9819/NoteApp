@@ -47,16 +47,18 @@ namespace NoteApp
 
 			set
 			{
-				if (Title.Length > 50)
+
+				if (value.Length > 50)
 				{
 					throw new ArgumentException("Название не должно превышать 50 символов.\n" +
 						" Количество символов: " + Title.Length);
 				}
-				else
+				if (value == "")
 				{
-					_title = value;
-					this.ModifiedTime = DateTime.Now;
+					throw new ArgumentException("Название строки не должно быть пустой строкой");
 				}
+				_title = value;
+				ModifiedTime = DateTime.Now;
 			}
 		}
 
@@ -72,7 +74,7 @@ namespace NoteApp
 			set
 			{
 				_type = value;
-				this.ModifiedTime = DateTime.Now;
+				ModifiedTime = DateTime.Now;
 			}
 		}
 
@@ -88,7 +90,7 @@ namespace NoteApp
 			set
 			{
 				_text = value;
-				this.ModifiedTime = DateTime.Now;
+				ModifiedTime = DateTime.Now;
 			}
 		}
 
@@ -121,34 +123,41 @@ namespace NoteApp
 
 			private set
 			{
-				//value = DateTime.Now;
 				_modifiedTime = value;
 			}
 		}
 
 		/// <summary>
-		/// Реализует возможность создавать заметки с одинаковыми именами.
+		/// Реализует возможность создавать копии существующих заметок.
 		/// </summary>
 		/// <returns>Возвращает новую заметку с существующим названием.</returns>
 		public object Clone()
 		{
 			return new Note()
-			{
-				Title = this.Title,
-				Type = this.Type,
-				Text = this.Text,
-				CreationTime = this.CreationTime,
-				ModifiedTime = this.ModifiedTime
+			{ 
+				Title = Title,
+				Type = Type,
+				Text = Text,
+				CreationTime = CreationTime,
+				ModifiedTime = ModifiedTime
 			};
 		}
-	}
 
-	///// <summary>
-	///// Интерфейс, поддерживающий копирование, при котором создаётся новый
-	///// экземпляр класса с тем же значением, что и существующего экземпляра.
-	///// </summary>
-	//public interface ICloneable
-	//{
-	//	object Clone();
-	//}
+		/*public object Clone(Note note)
+		{
+			note.Title = Title;
+			note.Type = Type;
+			note.Text = Text;
+			note.CreationTime = CreationTime;
+			note.ModifiedTime = ModifiedTime;
+
+			return note;
+		}*/
+
+		public static bool ReferenceEquals(Note note, Note clone)
+		{
+			clone = (Note)note.Clone();
+			return note == clone;
+		}
+	}
 }

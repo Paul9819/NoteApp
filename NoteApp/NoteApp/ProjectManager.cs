@@ -34,15 +34,15 @@ namespace NoteApp
 		/// <param name="project">Указание проекта, который нужно сохранить.</param>
 		public static void SaveToFile(Project project)
 		{
-			//Создаём экземпляр сериализатора.
+			// Создаём экземпляр сериализатора.
 			JsonSerializer serializer = new JsonSerializer();
 			serializer.Formatting = Formatting.Indented;
 
-			//Открываем поток для записи в файл с указанием пути.
+			// Открываем поток для записи в файл с указанием пути.
 			using (StreamWriter sw = new StreamWriter(_file))
 			using (JsonWriter writer = new JsonTextWriter(sw))
 			{
-				//Вызываем сериализацию и передаём объект, который хотим сериализовать.
+				// Вызываем сериализацию и передаём объект, который хотим сериализовать.
 				serializer.Serialize(writer, project);
 			}
 		}
@@ -53,15 +53,15 @@ namespace NoteApp
 		/// <param name="project">Указание проекта, который нужно загрузить.</param>
 		public static Project LoadFromFile()
 		{
-			//Создаём экземпляр сериализатора.
+			// Создаём экземпляр сериализатора.
 			JsonSerializer serializer = new JsonSerializer();
 			serializer.Formatting = Formatting.Indented;
 
-			//Открываем поток для чтения из файла с указанием пути.
+			// Открываем поток для чтения из файла с указанием пути.
 			using (StreamReader sr = new StreamReader(_file))
 			using (JsonReader reader = new JsonTextReader(sr))
 			{
-				//Вызываем десериализацию и явно преобразуем результат в целевой тип данных
+				// Вызываем десериализацию и явно преобразуем результат в целевой тип данных
 				var project = (Project)serializer.Deserialize<Project>(reader);
 				return project;
 			}
