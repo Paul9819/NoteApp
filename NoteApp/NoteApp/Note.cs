@@ -34,7 +34,13 @@ namespace NoteApp
 		/// Поле класса "Note", содержащее время изменения заметки.
 		/// </summary>
 		private DateTime _modifiedTime = DateTime.Now;
+		public Note() { }
 
+		public Note(DateTime CT, DateTime MT)
+		{
+			_creationTime = CT;
+			_modifiedTime = MT;
+		}
 		/// <summary>
 		/// Возвращает и задаёт название заметки (не более 50 символов).
 		/// </summary>
