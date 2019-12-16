@@ -31,20 +31,23 @@ namespace NoteApp.UnitTests
 			Assert.AreEqual(expected, actual, "Геттер Title возвращает неправильное название");
 		}
 
-		[Test (Description = "Присвоение правильного названия заметки")]
-		public void TestTitleSet_NoLonger50Symbols()
+		[TestCase("Thistitleisright", "Название длиннее 50 символов",
+			TestName = "Присвоение правильного названия заметки")]
+		[TestCase("IsNotNull", "Название заметки - пустая строка",
+			TestName = "Присвоение названию заметки не пустой строки")]
+		public void TestTitleSet_RightArgument(string rightTitle, string message)
 		{
-			var rightTitle = "Thistitleisright";
 			_testNote.Title = rightTitle;
 			var actual = _testNote.Title;
 
-			Assert.AreEqual(rightTitle, actual, "Название не длиннее 50 символов");
+			Assert.AreEqual(rightTitle, actual, message);
 		}
 
 		[TestCase("", "Должно возникать исключение, если название заметки - пустая строка",
 			TestName = "Присвоение пустой строки в качестве названия заметки")]
 		[TestCase("Thisiswrongtitle-Thisiswrongtitle-Thisiswrongtitle!",
-			"Должно возникать исключение, если название длиннее 50 символов")]
+			"Должно возникать исключение, если название длиннее 50 символов",
+			TestName = "Присвоение неправильной заметки больше 50 символов")]
 		public void TestTitleSet_ArgumentException(string wrongTitle, string message)
 		{
 			Assert.Throws<ArgumentException>(
