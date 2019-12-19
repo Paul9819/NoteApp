@@ -26,14 +26,17 @@ namespace NoteApp
 		/// <summary>
 		/// Поле класса "ProjectManager", содержащее название файла и путь к нему.
 		/// </summary>
-		private static string _file = _path + _name;
+		public static string _file = _path + _name;
 
 		/// <summary>
 		/// Реализует сохранение объекта "Проект" в файл.
 		/// </summary>
 		/// <param name="project">Указание проекта, который нужно сохранить.</param>
-		public static void SaveToFile(Project project)
+		/// <param name="file">Указание местоположения файла, который нужно сохранить.</param>
+		public static void SaveToFile(Project project, string file)
 		{
+			_file = file;
+
 			// Создаём экземпляр сериализатора.
 			JsonSerializer serializer = new JsonSerializer();
 			serializer.Formatting = Formatting.Indented;
@@ -50,9 +53,10 @@ namespace NoteApp
 		/// <summary>
 		/// Реализует загрузку объекта "Проект" из файла.
 		/// </summary>
-		/// <param name="project">Указание проекта, который нужно загрузить.</param>
-		public static Project LoadFromFile()
+		public static Project LoadFromFile(string file)
 		{
+			_file = file;
+
 			// Создаём экземпляр сериализатора.
 			JsonSerializer serializer = new JsonSerializer();
 			serializer.Formatting = Formatting.Indented;

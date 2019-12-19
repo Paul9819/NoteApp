@@ -31,16 +31,14 @@ namespace NoteApp.UnitTests
 			Assert.AreEqual(expected, actual, "Геттер Title возвращает неправильное название");
 		}
 
-		[TestCase("Thistitleisright", "Название длиннее 50 символов",
-			TestName = "Присвоение правильного названия заметки")]
-		[TestCase("IsNotNull", "Название заметки - пустая строка",
-			TestName = "Присвоение названию заметки не пустой строки")]
-		public void TestTitleSet_RightArgument(string rightTitle, string message)
+		[Test(Description = "Присвоение правильного названия заметки")]
+		public void TestTitleSet_NoLonger50Symbols()
 		{
+			var rightTitle = "Thistitleisright";
 			_testNote.Title = rightTitle;
 			var actual = _testNote.Title;
 
-			Assert.AreEqual(rightTitle, actual, message);
+			Assert.AreEqual(rightTitle, actual, "Название длиннее 50 символов");
 		}
 
 		[TestCase("", "Должно возникать исключение, если название заметки - пустая строка",
@@ -79,20 +77,9 @@ namespace NoteApp.UnitTests
 		public void TestClone()
 		{
 			var expected = _testNote;
-			bool IsClone = false;
-
 			var actual = (Note)expected.Clone();
-
-			if (expected.Title == actual.Title &
-				expected.Type == actual.Type &
-				expected.Text == actual.Text &
-				expected.CreationTime == actual.CreationTime &
-				expected.ModifiedTime == actual.ModifiedTime)
-			{
-				IsClone = true;
-			}
-
-			Assert.IsTrue(IsClone);
+			bool isClone = expected.Equals(actual);
+			Assert.IsTrue(isClone);
 		}
 	}
 }

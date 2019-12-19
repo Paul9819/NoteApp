@@ -149,21 +149,16 @@ namespace NoteApp
 			};
 		}
 
-		/*public object Clone(Note note)
+		public override bool Equals(object obj)
 		{
-			note.Title = Title;
-			note.Type = Type;
-			note.Text = Text;
-			note.CreationTime = CreationTime;
-			note.ModifiedTime = ModifiedTime;
+			if (obj.GetType() != GetType()) return false;
 
-			return note;
-		}*/
-
-		public static bool ReferenceEquals(Note note, Note clone)
-		{
-			clone = (Note)note.Clone();
-			return note == clone;
+			Note note = (Note)obj;
+			return (Title == note.Title & 
+					Type == note.Type &
+					Text == note.Text &
+					CreationTime == note.CreationTime &
+					ModifiedTime == note.ModifiedTime);
 		}
 	}
 }

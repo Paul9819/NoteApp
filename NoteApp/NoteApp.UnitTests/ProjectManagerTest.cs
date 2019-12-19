@@ -30,12 +30,12 @@ namespace NoteApp.UnitTests
 		[SetUp]
 		public void Init()
 		{
-			DateTime CT = new DateTime(2019, 12, 10);
-			DateTime MT = new DateTime(2019, 12, 11);
+			DateTime CreationTime = new DateTime(2019, 12, 10);
+			DateTime ModifiedTime = new DateTime(2019, 12, 11);
 
 			_testProject = new Project();
-			_testNote1 = new Note(CT, MT);
-			_testNote2 = new Note(CT, MT);
+			_testNote1 = new Note(CreationTime, ModifiedTime);
+			_testNote2 = new Note(CreationTime, ModifiedTime);
 		}
 
 		[Test(Description = "Тест на сериализацию")]
@@ -43,15 +43,14 @@ namespace NoteApp.UnitTests
 		{
 			_testProject.Notes.Add(_testNote1);
 			_testProject.Notes.Add(_testNote2);
-			ProjectManager.SaveToFile(_testProject);
 
 			string name = @"\NotesApp.notes";
 			string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 			string file = path + name;
 			var actual = File.ReadAllText(file);
 
-			path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-			file = path + name;
+			ProjectManager.SaveToFile(_testProject, file);
+
 			var expected = File.ReadAllText(file);
 
 			Assert.AreEqual(expected, actual, "Ошибка сериализации");
@@ -63,13 +62,18 @@ namespace NoteApp.UnitTests
 			_testProject.Notes.Add(_testNote1);
 			_testProject.Notes.Add(_testNote2);
 
+			string name = @"\NotesApp.notes";
+			string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			string file = path + name;
+
 			var expected = _testProject.Notes;
-			var testProject = ProjectManager.LoadFromFile();
+			var testProject = ProjectManager.LoadFromFile(file);
 			var actual = testProject.Notes;
 
-			for(var TestIndex = 0; TestIndex > expected.Count; TestIndex++)
+			for(int testIndex = 0; testIndex < expected.Count; testIndex++)
 			{
-				Assert.AreEqual(expected[TestIndex], actual[TestIndex], "Ошибка десериализации");
+				bool isClone = expected[testIndex].Equals(actual[testIndex]);
+				Assert.IsTrue(isClone);
 			}
 		}
 	}

@@ -197,7 +197,7 @@ namespace NoteAppUI
 
 		private void MainForm_Load(object sender, EventArgs e)
 		{
-			_project = ProjectManager.LoadFromFile();
+			_project = ProjectManager.LoadFromFile(ProjectManager._file);
 			var notes = _project.Notes;
 			foreach (var note in notes)
 			{
@@ -207,7 +207,7 @@ namespace NoteAppUI
 
 		private void MainForm_Deactivate(object sender, EventArgs e)
 		{
-			ProjectManager.SaveToFile(_project);
+			ProjectManager.SaveToFile(_project, ProjectManager._file);
 		}
 	}
 }
