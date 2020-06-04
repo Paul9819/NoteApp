@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using NoteApp;
 
@@ -13,6 +14,17 @@ namespace NoteAppUI
 		private Project _project = new Project();
 
 		/// <summary>
+		/// Экземпляр класса Project, содержащий сортированный 
+		/// по дате изменения список заметок.
+		/// </summary>
+		private Project sortType = new Project();
+
+		/// <summary>
+		/// Текущая заметка.
+		/// </summary>
+		private int currentNote = 0	;
+
+		/// <summary>
 		/// Экземпляр формы AboutForm.
 		/// </summary>
 		AboutForm aboutForm = new AboutForm();
@@ -21,7 +33,7 @@ namespace NoteAppUI
 		{
 			InitializeComponent();
 
-			ShowCategoryComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			ShowCategoryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
 
 			exitToolStripMenuItem.ShortcutKeys = Keys.Alt | Keys.F4;
 			aboutToolStripMenuItem.ShortcutKeys = Keys.F1;
@@ -35,6 +47,7 @@ namespace NoteAppUI
 			}
 			ShowCategoryComboBox.Items.Insert(0, "All");
 			ShowCategoryComboBox.SelectedIndex = 0;
+
 		}
 
 		private void AddButton_Click(object sender, EventArgs e)
@@ -64,6 +77,7 @@ namespace NoteAppUI
 
 		private void NotesListBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
+			_project.CurrentNote = NotesListBox.SelectedIndex;
 			var selectedIndex = NotesListBox.SelectedIndex;
 			if(selectedIndex != -1)
 			{
@@ -82,6 +96,13 @@ namespace NoteAppUI
 				TextRichTextBox.Text = "";
 			}
 		}
+		private void CurrentNote()
+		{
+			if (NotesListBox.Items.Count != 0)
+            {
+				
+            }
+		}
 
 		private void editNoteToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -95,7 +116,12 @@ namespace NoteAppUI
 
 		private void removeNoteToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			RemoveNote();
+			var dialogResult = MessageBox.Show("Вы уверены, что хотите удалить заметку?",
+				"Удаление заметки", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+			if(dialogResult == DialogResult.Yes)
+			{
+				RemoveNote();
+			}
 		}
 
 		/// <summary>
@@ -115,6 +141,7 @@ namespace NoteAppUI
 				_project.Notes.Add(updateNote);
 				NotesListBox.Items.Add(updateNote.Title);
 			}
+			ModifiedSortedList(_project);
 		}
 
 		/// <summary>
@@ -179,22 +206,46 @@ namespace NoteAppUI
 			}
 		}
 
-		private void ShowCategoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
+		/// <summary>
+		/// Сортировка списка заметок по дате изменения.
+		/// </summary>
+		private void ModifiedSortedList(Project list)
 		{
-			NoteType selectedType;
-			selectedType = (NoteType)ShowCategoryComboBox.SelectedIndex;
+			if (NotesListBox.Items.Count > 0)
+				NotesListBox.Items.Clear();
 
-			NotesListBox.Items.Clear();
-			var notes = _project.Notes;
-			foreach (var note in notes)
+			var sortNoteList = list.SortModifiedTime();
+
+			foreach (Note note in sortNoteList)
 			{
-				if (note.Type == selectedType | selectedType == 0)
-				{
-					NotesListBox.Items.Add(note.Title);
-				}
+				NotesListBox.Items.Add(note.Title);
 			}
 		}
 
+		/// <summary>
+		/// Сортировка списка заметок по категориям.
+		/// </summary>
+		private void NoteTypeSortedList()
+		{
+			if (ShowCategoryComboBox.Text != "All")
+			{
+				sortType.Notes = _project.SortNoteType(ShowCategoryComboBox.Text);
+				ModifiedSortedList(sortType);
+			}
+			else
+			{
+				ModifiedSortedList(_project);
+			}
+		}
+
+		private void ShowCategoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			NoteTypeSortedList();
+		}
+
+		/// <summary>
+		/// Загрузка заметок из файла.
+		/// </summary>
 		private void MainForm_Load(object sender, EventArgs e)
 		{
 			_project = ProjectManager.LoadFromFile(ProjectManager._file);
@@ -203,8 +254,13 @@ namespace NoteAppUI
 			{
 				NotesListBox.Items.Add(note.Title);
 			}
+			ModifiedSortedList(_project);
+			NotesListBox.SelectedIndex = _project.CurrentNote;
 		}
 
+		/// <summary>
+		/// Сохранение заметок в файл.
+		/// </summary>
 		private void MainForm_Deactivate(object sender, EventArgs e)
 		{
 			ProjectManager.SaveToFile(_project, ProjectManager._file);

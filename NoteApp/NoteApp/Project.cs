@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using NoteApp;
 
 
 namespace NoteApp
@@ -14,6 +16,11 @@ namespace NoteApp
 		private List<Note> _notes = new List<Note>();
 
 		/// <summary>
+		/// Текущая заметка.
+		/// </summary>
+		public int CurrentNote = 0;
+
+		/// <summary>
 		/// Возвращает и создаёт список заметок.
 		/// </summary>
 		public List<Note> Notes
@@ -27,5 +34,32 @@ namespace NoteApp
 				_notes = value;
 			}
 		}
+
+		/// <summary>
+		/// Сортировка заметок по категориям.
+		/// </summary>
+		public List<Note> SortNoteType(string value)
+		{
+			List<Note> NoteTypeList = new List<Note>();
+			NoteType result;
+
+			foreach (var note in Notes)
+			{
+				if (Enum.TryParse(value, out result) && (result == note.Type))
+					NoteTypeList.Add(note);
+			}
+			return NoteTypeList;
+		}
+
+        /// <summary>
+        /// Метод сортировки заметок по дате изменения
+        /// </summary>
+        public List<Note> SortModifiedTime()
+        {
+			List<Note> sortingList = Notes;
+
+			sortingList.Sort((x, y) => y.ModifiedTime.CompareTo(x.ModifiedTime));
+			return sortingList;
+        }	
 	}
 }
